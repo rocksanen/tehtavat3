@@ -2,6 +2,7 @@ import express, {Request} from 'express';
 import multer, {FileFilterCallback} from 'multer';
 import {getCoordinates, makeThumbnail} from '../../middlewares';
 import {catPost} from '../controllers/uploadController';
+import { body,param } from 'express-validator';
 
 const fileFilter = (
   request: Request,

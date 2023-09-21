@@ -21,7 +21,6 @@ export default {
   },
   Mutation: {
     createUser: async (_: undefined, args: User) => {
-      console.log(args);
       const user = new userModel(args);
       await user.save();
       return user;

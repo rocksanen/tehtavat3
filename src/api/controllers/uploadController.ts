@@ -6,6 +6,7 @@ import {Request, Response, NextFunction} from 'express';
 import {Point} from 'geojson';
 import CustomError from '../../classes/CustomError';
 import UploadMessageResponse from '../../interfaces/UploadMessageResponse';
+import {validationResult} from 'express-validator';
 
 const catPost = async (
   req: Request,
@@ -13,6 +14,17 @@ const catPost = async (
   next: NextFunction
 ) => {
   try {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const messages = errors
+          .array()
+          .map((error) => `${error.msg}: ${error.param}`)
+          .join(', ');
+          next (new CustomError(messages, 400));
+          return;
+      }
+
     if (!req.file) {
       const err = new CustomError('file not valid', 400);
       throw err;

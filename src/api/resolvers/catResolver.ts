@@ -32,7 +32,6 @@ export default {
       createCat: async (_: undefined, args: Cat) => {
         const newCat = new catModel(args);
   
-        // Get owner
         const owner = await userModel.findById(args.owner);
         if (!owner) {
           throw new Error('Owner not found');
